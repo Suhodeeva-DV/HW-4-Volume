@@ -8,47 +8,24 @@ namespace HW_4_Volume
         static void Main(string[] args)
         {
             Box box = new Box();
-            double valumeBox = ValumeBox(box);
-            Console.WriteLine("Объём куба Box: " + valumeBox);
+            double volumeBox = ValumeBox(box);
+            Console.WriteLine("Объём куба Box: " + volumeBox);
 
-            double valumeAdd = 0;
-
-            List<Shape> elementsInBox = new List<Shape>();
-
-            while (valumeAdd < valumeBox)
+            Shape newModel;
+            newModel = FillingBoxModel();
+            while (box.Add(newModel) == true)
             {
-                Shape newModel = FillingBoxModel();
-
-                if (box.Add((valumeBox-valumeAdd), newModel.Valume()))
-                {
-                    valumeAdd += newModel.Valume();
-                    Console.WriteLine("В Box добавлен новый элемент с объёмом: " + newModel.Valume());
-                    Console.WriteLine("Свободный объем в Box: " + (valumeBox - valumeAdd));
-                    elementsInBox.Add(newModel);
-                }
-                else
-                {
-                    Console.WriteLine("Данное тело не помещается в Box.");
-                    break;
-                }
+                Console.WriteLine("В Box добавлен новый элемент с объёмом: " + newModel.Volume());
+                Console.WriteLine("Свободный объем в Box: " + (box.Volume() - box.FilledVolume));
+                newModel = FillingBoxModel();
             }
-
-            Console.WriteLine();
-
-            Console.WriteLine("Содержимое Box: ");
-
-            foreach (Shape k in elementsInBox)
-            {
-                Console.WriteLine($"{k.Name()}, V = {k.Valume()}");
-            }
-
         }
 
         public static double ValumeBox (Box model)
         {
             int h = 10;
             model.Height = h;
-            double valume = model.Valume();
+            double valume = model.Volume();
             return valume;
         }
 
@@ -63,8 +40,6 @@ namespace HW_4_Volume
                     AddModels addModel = (AddModels)userInput;
                     Shape newModel = ValumeModel(addModel);
                     return newModel;
-                    //double valumeAddModel = newModel.Valume();
-                    //Console.WriteLine(valumeAddModel);
                 }
                 else
                 {
